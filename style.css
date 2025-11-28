@@ -44,6 +44,29 @@ body, html { margin: 0; padding: 0; overflow: hidden; background-color: #000000;
 }
 #corp-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
+#beach-btn {
+    position: absolute;
+    bottom: 90px;              /* 50px above corporate button */
+    left: 40px;
+    transform: translateY(-85px);  /* same vertical shift as corp-btn */
+    pointer-events: auto;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#beach-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
 /* 3. Side Drawer (Album View) */
 #side-drawer {
     position: absolute;
@@ -105,3 +128,93 @@ body, html { margin: 0; padding: 0; overflow: hidden; background-color: #000000;
 
 .lightbox-arrow.left { left: 40px; }
 .lightbox-arrow.right { right: 40px; }
+
+#intro-box {
+    position: absolute;
+    top: 60px;       
+    left: 40px;
+
+    /* Styled like your buttons */
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(4px);
+
+    color: #fff;
+    max-width: 260px;
+    pointer-events: auto;
+}
+
+.intro-title {
+    margin: 0 0 10px 0;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 300;
+}
+
+.intro-blurb {
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.intro-image {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+    opacity: 0.9;
+    margin-top: 10px;
+    opacity: 0.6;
+}
+.intro-image:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+#insta-link {
+    position: absolute;
+    bottom: 0px;  
+    left: 40px;
+
+    transform: translateY(-70px); /* same vertical offset as buttons */
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+
+    transition: all 0.3s ease;
+}
+
+#insta-link:hover {
+    background: #fff;
+    border-color: #fff;
+}
+
+#insta-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    filter: invert(1); /* makes placeholder white */
+    transition: filter 0.3s ease;
+}
+
+#insta-link:hover #insta-icon {
+    filter: invert(0); /* icon turns black on hover */
+}
+
+
+
+

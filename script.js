@@ -82,8 +82,8 @@ const portfolioData = [
         name: "Chiang Mai, Thailand",
         lat: 18.7953,
         lon: 98.9986,
-        preview: "",
-        images: []
+        preview: "images/Chiang_Mai/Chiang_Mai_1.jpg",
+        images: ["images/Chiang_Mai/Chiang_Mai_1.jpg", "images/Chiang_Mai/Chiang_Mai_2.jpg", "images/Chiang_Mai/Chiang_Mai_3.jpg"]
     },
     {
         name: "Crescent Head, Australia",
@@ -189,10 +189,9 @@ const portfolioData = [
         preview: "images/Montreal/Montreal_1.jpg",
         images: [
             "images/Montreal/Montreal_1.jpg",
-            "images/Montreal/Montrel_2.jpg",
+            "images/Montreal/Montreal_2.jpg",
             "images/Montreal/Montreal_3.jpg",
             "images/Montreal/Montreal_4.jpg",
-            "images/Montreal/Montreal_5.jpg",
             "images/Montreal/Montreal_6.jpg"
         ]
     },
@@ -264,9 +263,45 @@ const portfolioData = [
 ];
 
 const corporateData = {
-    name: "Corporate Portfolio",
-    images: ["https://picsum.photos/id/1/800/600", "https://picsum.photos/id/2/800/600", "https://picsum.photos/id/3/800/600"]
+    name: "Corporate & Event",
+    images: ["images/Corporate/Corporate_1.jpg", 
+        "images/Corporate/Corporate_2.jpg", 
+        "images/Corporate/Corporate_3.jpg", 
+        "images/Corporate/Corporate_4.jpg", 
+        "images/Corporate/Corporate_5.jpg", 
+        "images/Corporate/Corporate_6.jpg", 
+        "images/Corporate/Corporate_7.jpg", 
+        "images/Corporate/Corporate_8.jpg", 
+        "images/Corporate/Corporate_9.jpg", 
+        "images/Corporate/Corporate_10.jpg",
+         "images/Corporate/Corporate_11.jpg", 
+         "images/Corporate/Corporate_12.jpg", 
+         "images/Corporate/Corporate_13.jpg", 
+         "images/Corporate/Corporate_14.jpg", 
+         "images/Corporate/Corporate_15.jpg", 
+         "images/Corporate/Corporate_16.jpg"]
 };
+
+const beachData = {
+    name: "Beach & Surf",
+    images: [
+        // TODO: update these paths to your real beach images
+        "images/beach/Beach_1.jpg",
+        "images/beach/Beach_2.jpg",
+        "images/beach/Beach_3.jpg",
+        "images/beach/Beach_4.jpg",
+        "images/beach/Beach_5.jpg",
+        "images/beach/Beach_6.jpg",
+        "images/beach/Beach_7.jpg",
+        "images/beach/Beach_8.jpg",
+        "images/beach/Beach_9.jpg",
+        "images/beach/Beach_10.jpg",
+        "images/beach/Beach_11.jpg",
+        "images/beach/Beach_12.jpg",
+    ]
+};
+    
+
 
 // ===============================================================
 //                     THREE.JS SETUP
@@ -453,6 +488,11 @@ const drawerTitle = document.getElementById('drawer-title');
 document.getElementById('corp-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     openSidebar(corporateData.name, corporateData.images);
+});
+
+document.getElementById('beach-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    openSidebar(beachData.name, beachData.images);
 });
 
 function openSidebar(title, images) {

@@ -277,7 +277,7 @@ const corporateData = {
          "images/CORPORATE/corporate_11.jpg", 
          "images/CORPORATE/corporate_12.jpg", 
          "images/CORPORATE/corporate_13.jpg", 
-         "images/CORPORATE/corporate_14.jpg", 
+         "images/CORPORATE/corporate_17.jpg", 
          "images/CORPORATE/corporate_15.jpg", 
          "images/CORPORATE/corporate_16.jpg"]
 };

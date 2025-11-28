@@ -264,28 +264,27 @@ const portfolioData = [
 
 const corporateData = {
     name: "Corporate & Event",
-    images: ["images/Corporate/Corporate_1.jpg", 
-        "images/CORPORATE/Corporate_2.jpg", 
-        "images/CORPORATE/Corporate_3.jpg", 
-        "images/CORPORATE/Corporate_4.jpg", 
-        "images/CORPORATE/Corporate_5.jpg", 
-        "images/CORPORATE/Corporate_6.jpg", 
-        "images/CORPORATE/Corporate_7.jpg", 
-        "images/CORPORATE/Corporate_8.jpg", 
-        "images/CORPORATE/Corporate_9.jpg", 
-        "images/CORPORATE/Corporate_10.jpg",
-         "images/CORPORATE/Corporate_11.jpg", 
-         "images/CORPORATE/Corporate_12.jpg", 
-         "images/CORPORATE/Corporate_13.jpg", 
-         "images/CORPORATE/Corporate_14.jpg", 
-         "images/CORPORATE/Corporate_15.jpg", 
-         "images/CORPORATE/Corporate_16.jpg"]
+    images: ["images/Corporate/corporate_1.jpg", 
+        "images/CORPORATE/corporate_2.jpg", 
+        "images/CORPORATE/corporate_3.jpg", 
+        "images/CORPORATE/corporate_4.jpg", 
+        "images/CORPORATE/corporate_5.jpg", 
+        "images/CORPORATE/corporate_6.jpg", 
+        "images/CORPORATE/corporate_7.jpg", 
+        "images/CORPORATE/corporate_8.jpg", 
+        "images/CORPORATE/corporate_9.jpg", 
+        "images/CORPORATE/corporate_10.jpg",
+         "images/CORPORATE/corporate_11.jpg", 
+         "images/CORPORATE/corporate_12.jpg", 
+         "images/CORPORATE/corporate_13.jpg", 
+         "images/CORPORATE/corporate_14.jpg", 
+         "images/CORPORATE/corporate_15.jpg", 
+         "images/CORPORATE/corporate_16.jpg"]
 };
 
 const beachData = {
     name: "Beach & Surf",
     images: [
-        // TODO: update these paths to your real beach images
         "images/BEACH/Beach_1.jpg",
         "images/BEACH/Beach_2.jpg",
         "images/BEACH/Beach_3.jpg",

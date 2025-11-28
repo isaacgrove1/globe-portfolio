@@ -398,8 +398,11 @@ const tooltipImg = document.getElementById('tooltip-img');
 const tooltipText = document.getElementById('tooltip-text');
 
 function onMouseMove(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const rect = renderer.domElement.getBoundingClientRect();
+
+    // Convert mouse position to normalized device coordinates (-1 to +1)
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
     tooltip.style.left = event.clientX + 'px';
     tooltip.style.top = event.clientY + 'px';

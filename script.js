@@ -82,8 +82,8 @@ const portfolioData = [
         name: "Chiang Mai, Thailand",
         lat: 18.7953,
         lon: 98.9986,
-        preview: "images/Chiang_Mai/Chiang_Mai_1.jpg",
-        images: ["images/Chiang_Mai/Chiang_Mai_1.jpg", "images/Chiang_Mai/Chiang_Mai_2.jpg", "images/Chiang_Mai/Chiang_Mai_3.jpg"]
+        preview: "images/Chiang_Mai/Chiang_Mai_1.JPG",
+        images: ["images/Chiang_Mai/Chiang_Mai_1.JPG", "images/Chiang_Mai/Chiang_Mai_2.JPG", "images/Chiang_Mai/Chiang_Mai_3.JPG"]
     },
     {
         name: "Crescent Head, Australia",

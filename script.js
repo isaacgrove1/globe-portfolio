@@ -264,7 +264,7 @@ const portfolioData = [
 
 const corporateData = {
     name: "Corporate & Event",
-    images: ["images/Corporate/corporate_1.jpg", 
+    images: ["images/CORPORATE/corporate_1.jpg", 
         "images/CORPORATE/corporate_2.jpg", 
         "images/CORPORATE/corporate_3.jpg", 
         "images/CORPORATE/corporate_4.jpg", 

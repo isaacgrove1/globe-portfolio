@@ -1,16 +1,15 @@
-
 // ==========================================
 //        GLOBAL STYLE CONFIGURATION
 // ==========================================
 
 // 1. The Color of the Water (Hex Code)
-// Try: 0x000000 (Pitch Black), 0x050505 (Charcoal), 0x1a2b3c (Dark Blue)
-const COLOR_OCEAN = 0x111111; 
+const COLOR_OCEAN = 0x111111;
 
-// 2. The Color of the Land/Continents (Hex Code)
-// Try: 0xffffff (White), 0xeeeeee (Off-white), 0xcccccc (Light Grey)
+// 2. The Color of the Land (Hex Code)
 const COLOR_LAND = 0xffffff;
 
+// ==========================================
+//      PORTFOLIO DATA (CITY IMAGES)
 // ==========================================
 
 const portfolioData = [
@@ -269,7 +268,10 @@ const corporateData = {
     images: ["https://picsum.photos/id/1/800/600", "https://picsum.photos/id/2/800/600", "https://picsum.photos/id/3/800/600"]
 };
 
-// --- THREE.JS SETUP ---
+// ===============================================================
+//                     THREE.JS SETUP
+// ===============================================================
+
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x050505, 0.03);
@@ -283,20 +285,22 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 container.appendChild(renderer.domElement);
 
+// OrbitControls
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
-controls.enableZoom = false;
+controls.enableZoom = true;
+controls.minDistance = 7;   // closest allowed zoom
+controls.maxDistance = 25;  // furthest allowed zoom
 controls.autoRotate = true;
-controls.autoRotateSpeed = 0.8;
+controls.autoRotateSpeed = 0.3;
 
-// --- THE GLOBE (Two-Layer Method) ---
+// Globe setup
 const textureLoader = new THREE.TextureLoader();
-const globeGroup = new THREE.Group(); // Group to hold ocean and land
+const globeGroup = new THREE.Group();
 scene.add(globeGroup);
 
-// 1. OCEAN SPHERE (Base Layer)
-// This is a solid colored sphere
+// Ocean sphere
 const oceanGeometry = new THREE.SphereGeometry(5, 64, 64);
 const oceanMaterial = new THREE.MeshPhongMaterial({
     color: COLOR_OCEAN,
@@ -305,17 +309,13 @@ const oceanMaterial = new THREE.MeshPhongMaterial({
 const oceanMesh = new THREE.Mesh(oceanGeometry, oceanMaterial);
 globeGroup.add(oceanMesh);
 
-// 2. LAND SPHERE (Overlay Layer)
-// We load a transparency map. White parts of the image become visible land.
-// Black parts of the image become transparent, revealing the ocean sphere below.
-const landGeometry = new THREE.SphereGeometry(5.02, 64, 64); // Slightly larger to prevent glitching
-
-// We use a high-contrast black/white earth mask
+// Land sphere overlay
+const landGeometry = new THREE.SphereGeometry(5.02, 64, 64);
 const landTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg');
 
 const landMaterial = new THREE.MeshLambertMaterial({
     color: COLOR_LAND,
-    alphaMap: landTexture, // Use the texture as transparency mask
+    alphaMap: landTexture,
     transparent: true,
     opacity: 1.0,
     side: THREE.DoubleSide
@@ -323,10 +323,10 @@ const landMaterial = new THREE.MeshLambertMaterial({
 const landMesh = new THREE.Mesh(landGeometry, landMaterial);
 globeGroup.add(landMesh);
 
-// 3. Atmosphere Glow (Optional)
+// Glow
 const glowGeo = new THREE.SphereGeometry(5.2, 64, 64);
 const glowMat = new THREE.MeshBasicMaterial({
-    color: COLOR_LAND, // Glow matches land color
+    color: COLOR_LAND,
     transparent: true,
     opacity: 0.05,
     side: THREE.BackSide
@@ -334,7 +334,7 @@ const glowMat = new THREE.MeshBasicMaterial({
 const glow = new THREE.Mesh(glowGeo, glowMat);
 scene.add(glow);
 
-// --- LIGHTING ---
+// Lighting
 const ambientLight = new THREE.AmbientLight(0x404040, 2);
 scene.add(ambientLight);
 
@@ -342,9 +342,12 @@ const pointLight = new THREE.PointLight(0xffffff, 1.5);
 pointLight.position.set(20, 10, 20);
 scene.add(pointLight);
 
-// --- MARKERS ---
+// ===============================================================
+//                     MARKERS (CITY DOTS)
+// ===============================================================
+
 const markerGroup = new THREE.Group();
-globeGroup.add(markerGroup); // Attach markers to the globeGroup so they spin with it
+globeGroup.add(markerGroup);
 
 function latLonToVector3(lat, lon, radius) {
     const phi = (90 - lat) * (Math.PI / 180);
@@ -356,28 +359,33 @@ function latLonToVector3(lat, lon, radius) {
 }
 
 portfolioData.forEach((place, index) => {
-    const pos = latLonToVector3(place.lat, place.lon, 5.15); // Place just above land layer
-    
-    // Dot
-    const dotGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    // Make dot contrasting color (Red or Inverse of Land) or just Bright White
-    const dotMat = new THREE.MeshBasicMaterial({ color: 0xff0055 }); 
+    const pos = latLonToVector3(place.lat, place.lon, 5.15);
+
+    const dotGeo = new THREE.SphereGeometry(0.07, 16, 16);
+    const dotMat = new THREE.MeshBasicMaterial({ color: 0xff0055 });
     const mesh = new THREE.Mesh(dotGeo, dotMat);
-    
+
     mesh.position.set(pos.x, pos.y, pos.z);
     mesh.userData = { id: index, ...place };
     markerGroup.add(mesh);
-    
-    // Ring
+
     const ringGeo = new THREE.RingGeometry(0.15, 0.2, 32);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
+    const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.5
+    });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.position.set(pos.x, pos.y, pos.z);
-    ring.lookAt(0,0,0);
+    ring.lookAt(0, 0, 0);
     markerGroup.add(ring);
 });
 
-// --- INTERACTION ---
+// ===============================================================
+//                      INTERACTION
+// ===============================================================
+
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let hoveredObj = null;
@@ -397,19 +405,18 @@ function onMouseMove(event) {
     tooltip.style.top = event.clientY + 'px';
 
     raycaster.setFromCamera(mouse, camera);
-    
-    // Note: We are raycasting against markerGroup children
-    // Since markerGroup is inside globeGroup which rotates, World Coordinates are handled automatically by Three.js
     const intersects = raycaster.intersectObjects(markerGroup.children, true);
 
     if (intersects.length > 0) {
         const obj = intersects[0].object;
+
         if (obj.geometry.type === "SphereGeometry" && obj.userData.name) {
             if (hoveredObj !== obj) {
                 hoveredObj = obj;
                 document.body.style.cursor = 'pointer';
                 controls.autoRotate = false;
                 obj.scale.set(1.5, 1.5, 1.5);
+
                 tooltipImg.src = obj.userData.preview;
                 tooltipText.textContent = obj.userData.name;
                 tooltip.style.opacity = 1;
@@ -432,7 +439,10 @@ function onClick(event) {
     }
 }
 
-// --- UI LOGIC ---
+// ===============================================================
+//                     SIDEBAR UI LOGIC
+// ===============================================================
+
 const sideDrawer = document.getElementById('side-drawer');
 const galleryGrid = document.getElementById('gallery-grid');
 const drawerTitle = document.getElementById('drawer-title');
@@ -445,15 +455,17 @@ document.getElementById('corp-btn').addEventListener('click', (e) => {
 function openSidebar(title, images) {
     drawerTitle.textContent = title;
     galleryGrid.innerHTML = '';
+
     images.forEach(src => {
         const div = document.createElement('div');
         div.className = 'grid-item';
-        div.onclick = () => openLightbox(src);
+        div.onclick = () => openLightbox(src, images);
         const img = document.createElement('img');
         img.src = src;
         div.appendChild(img);
         galleryGrid.appendChild(div);
     });
+
     sideDrawer.classList.add('open');
     controls.autoRotate = false;
 }
@@ -463,10 +475,20 @@ function closeDrawer() {
     controls.autoRotate = true;
 }
 
+// ===============================================================
+//                   LIGHTBOX WITH NAVIGATION
+// ===============================================================
+
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 
-function openLightbox(src) {
+let currentImageIndex = 0;
+let currentImageList = [];
+
+function openLightbox(src, list = []) {
+    currentImageList = list;
+    currentImageIndex = currentImageList.indexOf(src);
+
     lightboxImg.src = src;
     lightbox.classList.add('active');
 }
@@ -475,13 +497,57 @@ function closeLightbox() {
     lightbox.classList.remove('active');
 }
 
+// Next/Previous image navigation
+function nextImage() {
+    if (currentImageList.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % currentImageList.length;
+    lightboxImg.src = currentImageList[currentImageIndex];
+}
+
+function prevImage() {
+    if (currentImageList.length === 0) return;
+    currentImageIndex = (currentImageIndex - 1 + currentImageList.length) % currentImageList.length;
+    lightboxImg.src = currentImageList[currentImageIndex];
+}
+
+// Keyboard navigation
+window.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'Escape') closeLightbox();
+});
+
+// ===============================================================
+//                     ANIMATION LOOP
+// ===============================================================
+
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+
+    // --- DOT AUTO-SCALE (Google Maps style) ---
+    // --- DOT + RING AUTO-SCALE (Google Maps style) ---
+    markerGroup.children.forEach(obj => {
+        const dist = camera.position.length();
+        const scale = dist * 0.05;   // adjust multiplier to tune size
+
+        // Scale DOTS
+        if (obj.geometry && obj.geometry.type === "SphereGeometry") {
+            obj.scale.set(scale, scale, scale);
+        }
+
+        // Scale RINGS
+        if (obj.geometry && obj.geometry.type === "RingGeometry") {
+            obj.scale.set(scale, scale, scale);
+        }
+    });
     renderer.render(scene, camera);
 }
 animate();
 
+// Handle window resizing
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
